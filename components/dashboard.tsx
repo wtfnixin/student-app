@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ProfileModal } from "@/components/profile-modal"
 import { QuizModal } from "@/components/quiz-modal"
 import { LessonModal } from "@/components/lesson-modal"
+import { LessonSummaryModal } from "@/components/lesson-summary-modal"
 import { LanguageSelector } from "@/components/language-selector"
 import { useLanguage } from "@/hooks/use-language"
 
@@ -23,6 +24,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   const [showMathsLessons, setShowMathsLessons] = useState(false)
   const [showEnglishLessons, setShowEnglishLessons] = useState(false)
   const [showScienceLessons, setShowScienceLessons] = useState(false)
+  const [selectedLesson, setSelectedLesson] = useState("")
+  const [showLessonSummary, setShowLessonSummary] = useState(false)
 
   const allSubjects = [
     {
@@ -83,6 +86,10 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
     "Glimpses of India"
   ]
 
+  const englishSummary = "The lesson describes the author's first experience of travelling by train. The excitement begins even before the journey starts – buying the ticket, packing, and reaching the station. At the station, the author observes the crowd, the noise of hawkers, the busy porters, and the overall lively atmosphere. When the train arrives, passengers rush to board. The author manages to get a seat near the window and enjoys looking outside as the train begins to move. The changing scenery – green fields, villages, rivers, trees, and mountains – fascinates him. He also notices fellow passengers, some talking, some eating, and some dozing off. The journey gives him joy, adventure, and new experiences. Finally, when the train reaches the destination, he feels a mix of happiness and disappointment – happy to reach but sad that the beautiful journey has ended."
+
+  const mathsSummary = "This chapter introduces students to the world of numbers and basic mathematical concepts. **Key Points:** • Natural numbers (1, 2, 3...) and whole numbers (0, 1, 2, 3...) • Number line and place value (units, tens, hundreds) • Comparing numbers using symbols: <, >, = • Basic operations with examples: 25 + 13 = 38, 45 - 17 = 28, 6 × 4 = 24, 20 ÷ 5 = 4 • Important formulas: Area of rectangle = length × breadth, Perimeter of square = 4 × side, Volume of cube = side³. The chapter builds a strong foundation for advanced mathematics through practical examples and exercises."
+
   const scienceLessons = [
     "Food: Where Does It Come From?",
     "Components of Food",
@@ -90,6 +97,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
     "Sorting Materials and Groups",
     "Separation of Substances"
   ]
+
+  const scienceSummary = "Food is something we all need to live, but the types of food we eat vary from place to place. A typical meal is made of different dishes, and each dish is prepared using many ingredients. These ingredients are obtained mainly from plants and animals. From plants, we use different parts as food. Roots like carrot and radish, stems like potato and sugarcane, leaves like spinach and cabbage, flowers such as cauliflower and banana flower, fruits like apple and mango, and seeds such as rice, wheat, and pulses are all eaten by us. In the same way, animals give us milk, eggs, meat, fish, and even honey collected by bees from flowers. Not just humans, even animals depend on food for survival. Based on their eating habits, animals are classified as: Herbivores, which eat only plants (like cows, goats, and deer). Carnivores, which eat other animals (like lions and tigers). Omnivores, which eat both plants and animals (like humans and bears). In simple words, this chapter tells us that our food comes from both plants and animals, different parts of plants are used as food, and animals have different food habits."
 
   const handleQuizStart = (subject: string) => {
     if (selectedClass === "5" && subject === "math") {
@@ -155,6 +164,12 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
               <div
                 key={index}
                 className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl cursor-pointer transition-shadow duration-300 shadow-lg hover:shadow-xl p-5"
+                onClick={() => {
+                  if (index === 0) {
+                    setSelectedLesson(lesson)
+                    setShowLessonSummary(true)
+                  }
+                }}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -192,6 +207,12 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
               <div
                 key={index}
                 className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl cursor-pointer transition-shadow duration-300 shadow-lg hover:shadow-xl p-5"
+                onClick={() => {
+                  if (index === 0) {
+                    setSelectedLesson(lesson)
+                    setShowLessonSummary(true)
+                  }
+                }}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -229,6 +250,12 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
               <div
                 key={index}
                 className="bg-gradient-to-r from-orange-500 to-red-500 rounded-xl cursor-pointer transition-shadow duration-300 shadow-lg hover:shadow-xl p-5"
+                onClick={() => {
+                  if (index === 0) {
+                    setSelectedLesson(lesson)
+                    setShowLessonSummary(true)
+                  }
+                }}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -416,6 +443,9 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           </div>
         )
 
+      case "homework":
+        return null
+
       default:
         return null
     }
@@ -426,9 +456,11 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
       {/* Header - Using solid background for proper contrast */}
       <div className="bg-purple-600 shadow-lg px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
-            <span className="text-white font-bold text-lg">G</span>
-          </div>
+          <img
+            src="/logo.jpg"
+            alt="Logo"
+            className="w-10 h-10 rounded-full object-cover shadow-lg"
+          />
           <h1 className="text-2xl font-bold text-white">{t("appName")}</h1>
         </div>
         <div className="flex items-center gap-3">
@@ -452,7 +484,7 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
         <div className="flex justify-around">
           {[
             { id: "home", label: t("home"), icon: "🏠" },
-            { id: "lessons", label: t("lessons"), icon: "📚" },
+            { id: "homework", label: "Homework", icon: "📝" },
             { id: "quizzes", label: t("quizzes"), icon: "🎯" },
             { id: "announcements", label: t("news"), icon: "📢" },
           ].map((item) => (
@@ -481,6 +513,20 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
       {showQuiz && <QuizModal subject={selectedSubject} onClose={() => setShowQuiz(false)} />}
 
       {showLesson && <LessonModal subject={selectedSubject} onClose={() => setShowLesson(false)} />}
+
+      {showLessonSummary && (
+        <LessonSummaryModal
+          lesson={selectedLesson}
+          summary={
+            mathsLessons.includes(selectedLesson)
+              ? mathsSummary
+              : englishLessons.includes(selectedLesson)
+              ? englishSummary
+              : scienceSummary
+          }
+          onClose={() => setShowLessonSummary(false)}
+        />
+      )}
     </div>
   )
 }

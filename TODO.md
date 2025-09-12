@@ -1,0 +1,3 @@
+- [ ] Replace "lessons" tab with "homework" in the bottom navigation
+- [ ] Add empty content for "homework" tab in renderContent
+- [ ] Add summary text for the first science lesson in a clean format
