@@ -1,30 +1,67 @@
-# Gyanika student app
+# Gyanika Student App
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+This is a student learning dashboard application built with React and TypeScript. It provides an interactive interface for students to access lessons, quizzes, and announcements for different subjects and classes.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/wtfnixins-projects/v0-gyanika-student-app)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/QYw5yY37i92)
+## Features
 
-## Overview
+- User authentication and profile management
+- Class selection (Class 5 and Class 6)
+- Subject-wise lessons and quizzes for Math, English, and Science
+- Interactive lesson and quiz navigation
+- Announcements and news section
+- Language selection support
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## Technologies Used
+
+- React with TypeScript
+- Tailwind CSS for styling
+- Custom hooks for language support
+- Modular component architecture
+
+## Project Structure
+
+- `components/` - React components including Dashboard, LessonModal, QuizModal, ProfileModal, etc.
+- `hooks/` - Custom React hooks such as language selector
+- `app/` - Main application entry and routing
+- `public/` - Static assets
+- `styles/` - Global and utility styles
+
+## Usage
+
+1. Clone the repository
+2. Install dependencies using your preferred package manager (e.g., `npm install` or `pnpm install`)
+3. Run the development server (`npm run dev` or `pnpm dev`)
+4. Open the app in your browser at `http://localhost:3000`
+
+## Dashboard Component
+
+The `Dashboard` component is the main interface for students. It allows:
+
+- Switching between tabs: Home, Lessons, Quizzes, Announcements
+- Selecting class (5 or 6)
+- Viewing subject cards with progress and scores
+- Accessing lessons and quizzes for Math, English, and Science
+- Viewing announcements and news
+- Managing user profile and logout
+
+## Lessons
+
+- Math lessons for Class 5 include topics like numbers, geometry, fractions, etc.
+- English lessons for Class 5 include stories and language topics.
+- Science lessons for Class 6 include food, materials, and separation of substances.
+
+## Testing
+
+- Verify navigation between tabs and class selection
+- Confirm lessons and quizzes display correctly for selected subjects and classes
+- Test modals for profile, lessons, and quizzes open and close properly
+- Check announcements display and update correctly
+- Validate language selector functionality
 
 ## Deployment
 
-Your project is live at:
+This project is deployed on Vercel and automatically synced with [v0.app](https://v0.app).
 
-**[https://vercel.com/wtfnixins-projects/v0-gyanika-student-app](https://vercel.com/wtfnixins-projects/v0-gyanika-student-app)**
+## License
 
-## Build your app
-
-Continue building your app on:
-
-**[https://v0.app/chat/projects/QYw5yY37i92](https://v0.app/chat/projects/QYw5yY37i92)**
-
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+MIT License
