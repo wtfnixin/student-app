@@ -11,9 +11,10 @@ import { LanguageSelector } from "@/components/language-selector"
 
 interface LoginFormProps {
   onLogin: (userData: any) => void
+  onSwitchToAdmin?: () => void
 }
 
-export function LoginForm({ onLogin }: LoginFormProps) {
+export function LoginForm({ onLogin, onSwitchToAdmin }: LoginFormProps) {
   const { t } = useLanguage()
   const [isLogin, setIsLogin] = useState(true)
   const [formData, setFormData] = useState({
@@ -106,7 +107,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
               {loading ? t("pleaseWait") : isLogin ? t("signIn") : t("createAccount")}
             </Button>
           </form>
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center space-y-2">
             <button
               type="button"
               onClick={() => setIsLogin(!isLogin)}
@@ -114,6 +115,17 @@ export function LoginForm({ onLogin }: LoginFormProps) {
             >
               {isLogin ? t("dontHaveAccount") : t("alreadyHaveAccount")}
             </button>
+            {onSwitchToAdmin && (
+              <div>
+                <button
+                  type="button"
+                  onClick={onSwitchToAdmin}
+                  className="text-gray-500 hover:text-gray-700 text-xs"
+                >
+                  Admin Access
+                </button>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
