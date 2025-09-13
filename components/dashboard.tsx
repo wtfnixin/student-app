@@ -5,6 +5,7 @@ import { ProfileModal } from "@/components/profile-modal"
 import { QuizModal } from "@/components/quiz-modal"
 import { LessonModal } from "@/components/lesson-modal"
 import { LessonSummaryModal } from "@/components/lesson-summary-modal"
+import { QuizStartModal } from "@/components/quiz-start-modal"
 import { LanguageSelector } from "@/components/language-selector"
 import { useLanguage } from "@/hooks/use-language"
 
@@ -26,6 +27,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   const [showScienceLessons, setShowScienceLessons] = useState(false)
   const [selectedLesson, setSelectedLesson] = useState("")
   const [showLessonSummary, setShowLessonSummary] = useState(false)
+  const [showQuizStart, setShowQuizStart] = useState(false)
+  const [quizMode, setQuizMode] = useState(false)
 
   const allSubjects = [
     {
@@ -62,7 +65,16 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
       progress: 55,
       icon: "🕉️",
       bgColor: "bg-green-600",
-      classes: ["6"]
+      classes: ["5", "6"]
+    },
+    {
+      name: "Social",
+      key: "social",
+      score: "150.50",
+      progress: 70,
+      icon: "🌍",
+      bgColor: "bg-purple-500",
+      classes: ["5"]
     },
   ]
 
@@ -83,7 +95,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
     "A House, A Home",
     "The Little Girl",
     "The Treasure Within",
-    "Glimpses of India"
+    "Glimpses of India",
+    "Parts of Speech"
   ]
 
   const englishSummary = "The lesson describes the author's first experience of travelling by train. The excitement begins even before the journey starts – buying the ticket, packing, and reaching the station. At the station, the author observes the crowd, the noise of hawkers, the busy porters, and the overall lively atmosphere. When the train arrives, passengers rush to board. The author manages to get a seat near the window and enjoys looking outside as the train begins to move. The changing scenery – green fields, villages, rivers, trees, and mountains – fascinates him. He also notices fellow passengers, some talking, some eating, and some dozing off. The journey gives him joy, adventure, and new experiences. Finally, when the train reaches the destination, he feels a mix of happiness and disappointment – happy to reach but sad that the beautiful journey has ended."
@@ -115,7 +128,8 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
       setShowEnglishLessons(false)
     } else {
       setSelectedSubject(subject)
-      setShowQuiz(true)
+      setShowQuizStart(true)
+      setShowQuiz(false)
       setShowMathsLessons(false)
       setShowEnglishLessons(false)
       setShowScienceLessons(false)
@@ -279,7 +293,7 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
         return (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-3xl font-bold text-purple-600">{t("learning")}</h2>
+              <h2 className="text-3xl font-bold text-purple-600">{t("home")}</h2>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-medium text-gray-600">Class:</span>
                 <select
@@ -309,7 +323,6 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
                     <span className="text-2xl">⭐</span>
                   </div>
                   <h3 className="text-white font-bold text-xl mb-2">{subject.name}</h3>
-                  <p className="text-white font-medium text-sm mb-4">{subject.score}</p>
                   <div className="w-full bg-white/20 rounded-full h-3 shadow-inner">
                     <div
                       className="bg-yellow-400 h-3 rounded-full transition-all duration-500 shadow-sm"
@@ -318,6 +331,56 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="mt-8">
+              <h3 className="text-2xl font-bold text-purple-600 mb-4">{t("resources")}</h3>
+              <div className="space-y-4">
+                <div className="bg-white rounded-xl p-4 shadow-lg">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">📄</span>
+                      <div>
+                        <h4 className="font-bold">Math Worksheet.pdf</h4>
+                        <p className="text-sm text-gray-600">{t("uploadedBy")} {t("teacherA")}</p>
+                      </div>
+                    </div>
+                    <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2">
+                      <span>⬇️</span>
+                      <span className="text-sm font-medium">Download</span>
+                    </button>
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl p-4 shadow-lg">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">📚</span>
+                      <div>
+                        <h4 className="font-bold">Science Notes.docx</h4>
+                        <p className="text-sm text-gray-600">{t("uploadedBy")} {t("teacherB")}</p>
+                      </div>
+                    </div>
+                    <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2">
+                      <span>⬇️</span>
+                      <span className="text-sm font-medium">Download</span>
+                    </button>
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl p-4 shadow-lg">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">📚</span>
+                      <div>
+                        <h4 className="font-bold">English Notes.docx</h4>
+                        <p className="text-sm text-gray-600">{t("uploadedBy")} {t("teacherC")}</p>
+                      </div>
+                    </div>
+                    <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2">
+                      <span>⬇️</span>
+                      <span className="text-sm font-medium">Download</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )
@@ -340,67 +403,6 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
                       <p className="text-white/80 text-sm">Click to view lessons</p>
                     </div>
                     <span className="text-white text-xl">→</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )
-
-      case "quizzes":
-        if (showMathsLessons) {
-          return (
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <button
-                  onClick={() => setShowMathsLessons(false)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
-                >
-                  <span className="text-xl">←</span>
-                  <span className="font-medium">Back</span>
-                </button>
-                <h2 className="text-3xl font-bold text-purple-600">Mathematics Lessons</h2>
-              </div>
-              <div className="grid grid-cols-1 gap-4">
-                {mathsLessons.map((lesson, index) => (
-                  <div
-                    key={index}
-                    className="bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl cursor-pointer transition-shadow duration-300 shadow-lg hover:shadow-xl p-5"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <span className="text-3xl">📚</span>
-                        <div>
-                          <h3 className="text-white font-bold text-xl">{lesson}</h3>
-                          <p className="text-white/80 text-sm">Chapter {index + 1}</p>
-                        </div>
-                      </div>
-                      <span className="text-white text-2xl">→</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )
-        }
-
-        return (
-          <div>
-            <h2 className="text-3xl font-bold text-purple-600 mb-6">{t("quizzes")}</h2>
-            <div className="space-y-4">
-              {subjects.map((subject) => (
-                <div
-                  key={subject.key}
-                  className={`${subject.bgColor} rounded-xl cursor-pointer transition-shadow duration-300 shadow-lg hover:shadow-xl p-4`}
-                  onClick={() => handleQuizStart(subject.key)}
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="text-3xl">{subject.icon}</span>
-                    <div className="flex-1">
-                      <h3 className="text-white font-bold text-xl">{subject.name} Quiz</h3>
-                      <p className="text-white/80 text-sm">Test your knowledge</p>
-                    </div>
-                    <span className="text-white text-xl">🎯</span>
                   </div>
                 </div>
               ))}
@@ -444,7 +446,185 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
         )
 
       case "homework":
-        return null
+        const homeworkData = [
+          {
+            subject: "Mathematics",
+            date: "2024-06-01",
+            description: "Complete exercises 5 to 10 on page 42."
+          },
+          {
+            subject: "Science",
+            date: "2024-06-02",
+            description: "Prepare a presentation on the water cycle."
+          }
+        ]
+
+        return (
+          <div>
+            <h2 className="text-3xl font-bold text-purple-600 mb-6">Homework</h2>
+            <div className="grid grid-cols-1 gap-4">
+              {homeworkData.map((hw, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl p-4 shadow-lg border border-gray-200"
+                >
+                  <div className="flex justify-between mb-2">
+                    <span className="font-semibold text-lg">{hw.subject}</span>
+                    <span className="text-gray-500 text-sm">{hw.date}</span>
+                  </div>
+                  <p className="text-gray-700">{hw.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+
+      case "quiz":
+        return (
+          <div>
+            <h2 className="text-3xl font-bold text-purple-600 mb-6">Quiz</h2>
+            <div className="space-y-4">
+              {subjects.map((subject) => {
+                if (subject.key === "english") {
+                  // Group all English lessons within the English card
+                  return (
+                    <div
+                      key={subject.key}
+                      className={`${subject.bgColor} rounded-xl transition-shadow duration-300 shadow-lg hover:shadow-xl p-6`}
+                    >
+                      <div className="flex items-center gap-4 mb-4">
+                        <span className="text-3xl">{subject.icon}</span>
+                        <div className="flex-1">
+                          <h3 className="text-white font-bold text-xl">{subject.name}</h3>
+                          <p className="text-white/80 text-sm">Select a lesson to start quiz</p>
+                        </div>
+                        <span className="text-white text-xl">📚</span>
+                      </div>
+
+                      {/* English lessons grid within the card */}
+                      <div className="bg-white/10 rounded-lg p-4">
+                        <div className="grid grid-cols-1 gap-3">
+                          {englishLessons
+                            .filter(lesson => lesson === "Parts of Speech")
+                            .map((lesson, index) => (
+                            <div
+                              key={index}
+                              className="bg-white/20 hover:bg-white/30 border border-white/30 rounded-lg cursor-pointer transition-all duration-200 p-3"
+                              onClick={() => {
+                                setSelectedSubject(subject.key)
+                                setSelectedLesson(lesson)
+                                setShowQuizStart(true)
+                              }}
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-xl">📖</span>
+                                  <div>
+                                    <h4 className="text-white font-semibold text-base">{lesson}</h4>
+                                    <p className="text-white/70 text-sm">Click to start quiz</p>
+                                  </div>
+                                </div>
+                                <span className="text-white text-lg">🧠</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                } else if (subject.key === "math") {
+                  // Group Math lessons including Geometry within the Math card
+                  return (
+                    <div
+                      key={subject.key}
+                      className={`${subject.bgColor} rounded-xl transition-shadow duration-300 shadow-lg hover:shadow-xl p-6`}
+                    >
+                      <div className="flex items-center gap-4 mb-4">
+                        <span className="text-3xl">{subject.icon}</span>
+                        <div className="flex-1">
+                          <h3 className="text-white font-bold text-xl">{subject.name}</h3>
+                          <p className="text-white/80 text-sm">Select a lesson to start quiz</p>
+                        </div>
+                        <span className="text-white text-xl">📐</span>
+                      </div>
+
+                      {/* Math lessons grid within the card */}
+                      <div className="bg-white/10 rounded-lg p-4">
+                        <div className="grid grid-cols-1 gap-3">
+                          {mathsLessons
+                            .filter(lesson => lesson === "Knowing our numbers")
+                            .map((lesson, index) => (
+                            <div
+                              key={index}
+                              className="bg-white/20 hover:bg-white/30 border border-white/30 rounded-lg cursor-pointer transition-all duration-200 p-3"
+                              onClick={() => {
+                                setSelectedSubject(subject.key)
+                                setSelectedLesson(lesson)
+                                setShowQuizStart(true)
+                              }}
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-xl">🔢</span>
+                                  <div>
+                                    <h4 className="text-white font-semibold text-base">{lesson}</h4>
+                                    <p className="text-white/70 text-sm">Click to start quiz</p>
+                                  </div>
+                                </div>
+                                <span className="text-white text-lg">🧠</span>
+                              </div>
+                            </div>
+                          ))}
+                          {/* Add Geometry as a nested lesson */}
+                          <div
+                            className="bg-white/20 hover:bg-white/30 border border-white/30 rounded-lg cursor-pointer transition-all duration-200 p-3"
+                            onClick={() => {
+                              setSelectedSubject("Geometry")
+                              setSelectedLesson("Geometry")
+                              setShowQuizStart(true)
+                            }}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <span className="text-xl">📐</span>
+                                <div>
+                                  <h4 className="text-white font-semibold text-base">Geometry</h4>
+                                  <p className="text-white/70 text-sm">Click to start quiz</p>
+                                </div>
+                              </div>
+                              <span className="text-white text-lg">🧠</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                } else {
+                  return (
+                    <div
+                      key={subject.key}
+                      className={`${subject.bgColor} rounded-xl cursor-pointer transition-shadow duration-300 shadow-lg hover:shadow-xl p-4`}
+                      onClick={() => {
+                        setSelectedSubject(subject.key)
+                        setSelectedLesson(subject.name)
+                        setShowQuizStart(true)
+                      }}
+                    >
+                      <div className="flex items-center gap-4">
+                        <span className="text-3xl">{subject.icon}</span>
+                        <div className="flex-1">
+                          <h3 className="text-white font-bold text-xl">{subject.name}</h3>
+                          <p className="text-white/80 text-sm">Click to start quiz</p>
+                        </div>
+                        <span className="text-white text-xl">🧠</span>
+                      </div>
+                    </div>
+                  )
+                }
+              })}
+            </div>
+          </div>
+        )
 
       default:
         return null
@@ -454,7 +634,7 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
       {/* Header - Using solid background for proper contrast */}
-      <div className="bg-purple-600 shadow-lg px-4 py-4 flex items-center justify-between">
+      <div className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 shadow-lg px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img
             src="/logo.jpg"
@@ -485,7 +665,7 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           {[
             { id: "home", label: t("home"), icon: "🏠" },
             { id: "homework", label: "Homework", icon: "📝" },
-            { id: "quizzes", label: t("quizzes"), icon: "🎯" },
+            { id: "quiz", label: "Quiz", icon: "🧠" },
             { id: "announcements", label: t("news"), icon: "📢" },
           ].map((item) => (
             <button
@@ -495,6 +675,7 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
                 setShowMathsLessons(false) // Reset maths lessons when switching tabs
                 setShowEnglishLessons(false) // Reset english lessons when switching tabs
                 setShowScienceLessons(false) // Reset science lessons when switching tabs
+                setShowQuizStart(false) // Reset quiz start when switching tabs
               }}
               className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all ${
                 activeTab === item.id ? "bg-purple-100 text-purple-700" : "text-gray-700 hover:text-purple-600"
@@ -510,10 +691,13 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
       {/* Modals */}
       {showProfile && <ProfileModal user={user} onClose={() => setShowProfile(false)} onLogout={onLogout} />}
 
-      {showQuiz && <QuizModal subject={selectedSubject} onClose={() => setShowQuiz(false)} />}
+      {showQuiz && <QuizModal subject={selectedSubject} lesson={selectedLesson} onClose={() => setShowQuiz(false)} />}
 
       {showLesson && <LessonModal subject={selectedSubject} onClose={() => setShowLesson(false)} />}
 
+      {/*
+      Removed LessonSummaryModal from quiz section as per user request
+      */}
       {showLessonSummary && (
         <LessonSummaryModal
           lesson={selectedLesson}
@@ -525,6 +709,17 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
               : scienceSummary
           }
           onClose={() => setShowLessonSummary(false)}
+        />
+      )}
+
+      {showQuizStart && (
+        <QuizStartModal
+          lesson={selectedLesson}
+          onStartQuiz={() => {
+            setShowQuizStart(false)
+            setShowQuiz(true)
+          }}
+          onClose={() => setShowQuizStart(false)}
         />
       )}
     </div>

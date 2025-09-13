@@ -69,6 +69,13 @@ const translations = {
     pleaseWait: "Please wait...",
     dontHaveAccount: "Don't have an account? Sign up",
     alreadyHaveAccount: "Already have an account? Sign in",
+
+    // Resources
+    resources: "Resources",
+    uploadedBy: "Uploaded by",
+    teacherA: "Teacher A",
+    teacherB: "Teacher B",
+    teacherC: "Teacher C",
   },
   hi: {
     // Header
@@ -128,6 +135,13 @@ const translations = {
     pleaseWait: "कृपया प्रतीक्षा करें...",
     dontHaveAccount: "खाता नहीं है? साइन अप करें",
     alreadyHaveAccount: "पहले से खाता है? साइन इन करें",
+
+    // Resources
+    resources: "संसाधन",
+    uploadedBy: "अपलोड किया गया",
+    teacherA: "शिक्षक A",
+    teacherB: "शिक्षक B",
+    teacherC: "शिक्षक C",
   },
   pa: {
     // Header
@@ -187,6 +201,13 @@ const translations = {
     pleaseWait: "ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ...",
     dontHaveAccount: "ਖਾਤਾ ਨਹੀਂ ਹੈ? ਸਾਈਨ ਅੱਪ ਕਰੋ",
     alreadyHaveAccount: "ਪਹਿਲਾਂ ਤੋਂ ਖਾਤਾ ਹੈ? ਸਾਈਨ ਇਨ ਕਰੋ",
+
+    // Resources
+    resources: "ਸਰੋਤ",
+    uploadedBy: "ਅਪਲੋਡ ਕੀਤਾ ਗਿਆ",
+    teacherA: "ਅਧਿਆਪਕ A",
+    teacherB: "ਅਧਿਆਪਕ B",
+    teacherC: "ਅਧਿਆਪਕ C",
   },
 }
 
